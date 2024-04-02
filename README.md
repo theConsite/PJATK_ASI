@@ -10,7 +10,7 @@ Grupa 4
 - [@Marcin Godniak](https://github.com/MarcinGodniak)
 - [@Adrian Jobda](https://github.com/theConsite)
 - [@Filip Kubasiewicz](https://github.com/fresco0700)
-- [@Jarosław Małucha](https://www.github.com/)
+- [@Jarosław Małucha](https://github.com/JaroslawMalucha)
 
 ## Uruchomienie
 W repozytorium nie ma zbioru danych, musicie je pobrać oddzielnie z [tego linku](https://www.kaggle.com/datasets/kelvinkelue/credit-card-fraud-prediction?resource=download) i ustawić nazwę pliku na 'dataset.csv'
