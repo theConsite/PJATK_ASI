@@ -16,8 +16,41 @@ seaborn = "^0.13.2"
 geopandas = "^0.14.3"
 contextily = "^1.6.0"
 imblearn = "^0.0"
+kedro = "^0.19.3"
+kedro-viz = "^8.0.1"
+kedro-telemetry = "^0.3.2"
+kedro-datasets = {version="*", extras=["pandas.CSVDataset", "pandas.ExcelDataset", "pandas.ParquetDataset", "plotly.PlotlyDataset", "plotly.JSONDataset", "pandas.JSONDataset", "matplotlib.MatplotlibWriter"]}
+jupyter = "^1.0.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "pjatk_asi"
+readme = "README.md"
+dynamic = [ "dependencies", "version",]
+
+[project.scripts]
+pjatk-asi = "pjatk_asi.__main__:main"
+
+[tool.kedro]
+package_name = "pjatk_asi"
+project_name = "PJATK_ASI"
+kedro_init_version = "0.19.3"
+tools = [ "Kedro Viz",]
+example_pipeline = "True"
+source_dir = "src"
+
+[project.entry-points."kedro.hooks"]
+
+[tool.setuptools.dynamic.dependencies]
+file = "requirements.txt"
+
+[tool.setuptools.dynamic.version]
+attr = "pjatk_asi.__version__"
+
+[tool.setuptools.packages.find]
+where = [ "src",]
+namespaces = false

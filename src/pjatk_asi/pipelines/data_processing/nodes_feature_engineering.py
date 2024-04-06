@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 # Define a function to categorize time periods
-def categorize_time_period(timestamp):
+def _categorize_time_period(timestamp):
     hour = timestamp.hour
     if 5 <= hour < 12:
         return 'morning'
@@ -15,7 +15,7 @@ def categorize_time_period(timestamp):
 
 
 # Function to calculate distance using Haversine formula
-def haversine(lat1, lon1, lat2, lon2):
+def _haversine(lat1, lon1, lat2, lon2):
     R = 6371  # Radius of the Earth in kilometers
 
     # Convert latitude and longitude from degrees to radians
@@ -37,11 +37,12 @@ def haversine(lat1, lon1, lat2, lon2):
 def parse_timestamp(fraud_df, column):
     fraud_df[column] = pd.to_datetime(fraud_df[column], format='%d/%m/%Y %H:%M')
 
+
 def feature_generation(fraud_df):
     parse_timestamp(fraud_df, 'trans_date_trans_time')
 
     # Add time period
-    fraud_df['time_period'] = fraud_df['trans_date_trans_time'].apply(categorize_time_period)
+    fraud_df['time_period'] = fraud_df['trans_date_trans_time'].apply(_categorize_time_period)
 
     # Add day of the week
     fraud_df['day_of_week'] = fraud_df['trans_date_trans_time'].dt.day_name()
@@ -59,7 +60,9 @@ def feature_generation(fraud_df):
     fraud_df['age_of_user'] = trans_year - dob_year
 
     # Calculate distance and create 'distance' column
-    fraud_df['distance'] = haversine(fraud_df['lat'], fraud_df['long'], fraud_df['merch_lat'], fraud_df['merch_long'])
+    fraud_df['distance'] = _haversine(fraud_df['lat'], fraud_df['long'], fraud_df['merch_lat'], fraud_df['merch_long'])
+
+    return fraud_df
 
 
 def remove_columns(fraud_df):
@@ -77,10 +80,5 @@ def remove_columns(fraud_df):
     # te dane są kategoryczne o zbyt duze licznie unikalnych wartości aby ich uzyc - moze da się jakoś je przetworzyć?
     fraud_df.drop(columns=['merchant', 'city', 'job', 'street', 'zip'], inplace=True)
 
+    return fraud_df
 
-if __name__ == "__main__":
-    from data_load import read_data
-    fraud_df = read_data()
-    feature_generation(fraud_df)
-    remove_columns(fraud_df)
-    print(fraud_df.describe())
