@@ -9,10 +9,10 @@ from imblearn.over_sampling import SMOTE
 def data_split(fraud_df: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
     Y = fraud_df[['is_fraud']]
     X = fraud_df.drop(columns=['is_fraud'])
-    return X, pd.DataFrame(Y)
+    return X, Y
 
 
-def test_train_split(X, Y):
+def test_train_split(X: pd.DataFrame, Y: pd.DataFrame):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=5, stratify=Y['is_fraud'])
     return X_train, X_test, Y_train, Y_test
 
@@ -76,6 +76,6 @@ def balance(X: pd.DataFrame, Y: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
     Y_under_sampled = Y.groupby('is_fraud', group_keys=False).apply(lambda x: x.sample(min(len(x), n), replace=False))
     X_under_sampled = X.loc[Y_under_sampled.index]
 
-    X, Y = smote.fit_resample(X_under_sampled, Y_under_sampled['is_fraud'])
+    X_oversampled, Y_oversampled = smote.fit_resample(X_under_sampled, Y_under_sampled['is_fraud'])
 
-    return X, pd.DataFrame(Y)
+    return X_oversampled, Y_oversampled

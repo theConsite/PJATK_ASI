@@ -20,6 +20,7 @@ kedro = "^0.19.3"
 kedro-viz = "^8.0.1"
 kedro-telemetry = "^0.3.2"
 kedro-datasets = {version="*", extras=["pandas.CSVDataset", "pandas.ExcelDataset", "pandas.ParquetDataset", "plotly.PlotlyDataset", "plotly.JSONDataset", "pandas.JSONDataset", "matplotlib.MatplotlibWriter"]}
+jupyter = "^1.0.0"
 
 
 [build-system]

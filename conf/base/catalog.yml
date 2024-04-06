@@ -43,46 +43,51 @@ credit_data:
   type: pandas.CSVDataset
   filepath: data/01_raw/credit_data.csv
 
-credit_data_with_removed_columns:
-  type: pandas.ParquetDataset
-  filepath: data/02_intermediate/credit_data_with_removed_columns.pq
+#credit_data_with_removed_columns:
+#  type: pandas.ParquetDataset
+#  filepath: data/02_intermediate/credit_data_with_removed_columns.pq
+#
+#X_train_balanced:
+#  type: pandas.ParquetDataset
+#  filepath: data/05_model_input/X_train_balanced.pq
 
-X_train_balanced:
-  type: pandas.ParquetDataset
-  filepath: data/05_model_input/X_train_balanced.pq
+#Y_train_balanced:
+#  type: pandas.CSVDataSet
+#  filepath: data/05_model_input/Y_train_balanced.pq
 
-Y_train_balanced:
-  type: pandas.ParquetDataset
-  filepath: data/05_model_input/Y_train_balanced.pq
-
-X_test_prepared:
-  type: pandas.ParquetDataset
-  filepath: data/05_model_input/X_test_prepared.pq
-
-one_hot_encoder:
-  type: pickle.PickleDataset
-  filepath: data/06_models/one_hot_encoder.pickle
-  versioned: false
-
-std_scaler:
-  type: pickle.PickleDataset
-  filepath: data/06_models/std_scaler.pickle
-  versioned: false
+#X_test_prepared:
+#  type: pandas.ParquetDataset
+#  filepath: data/05_model_input/X_test_prepared.pq
+#
+#one_hot_encoder:
+#  type: pickle.PickleDataset
+#  filepath: data/06_models/one_hot_encoder.pickle
+#  versioned: false
+#
+#std_scaler:
+#  type: pickle.PickleDataset
+#  filepath: data/06_models/std_scaler.pickle
+#  versioned: false
 
 #best_parameters:
 #  type: pandas.JSONDataSet
 #  filepath: data/07_model_output/best_parameters.json
 
-model:
-  type: pickle.PickleDataset
-  filepath: data/06_models/model.pickle
+#model:
+#  type: pickle.PickleDataset
+#  filepath: data/06_models/model.pickle
+#  versioned: true
+
+#Y_predicted:
+#  type: pandas.CSVDataSet
+#  filepath: data/07_model_output/Y_predicted.pq
+#  versioned: true
+
+confusion_matrix:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/confusion_matrix.png
   versioned: true
 
-
-#
-#model_input_table:
-#  type: pandas.ParquetDataset
-#  filepath: data/03_primary/model_input_table.pq
 #
 #regressor:
 #  type: pickle.PickleDataset

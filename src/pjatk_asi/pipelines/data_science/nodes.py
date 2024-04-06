@@ -71,17 +71,23 @@ def select_hiperparameters(X, Y):
         ('clf', GradientBoostingClassifier())
     ])
 
+    print(X.shape)
+    print(X.describe())
+    print(Y.describe())
+
     # Define parameter grid for GridSearchCV
     param_grid = {
-        'clf__n_estimators': [50], #100, 150, 200],
-        'clf__learning_rate': [0.01],# 0.1, 0.2],
-        'clf__max_depth': [3],# 4, 5, 6]
+        'clf__n_estimators': [50, 100, 150, 200],
+        'clf__learning_rate': [0.01, 0.1, 0.2],
+        'clf__max_depth': [3, 4, 5, 6]
     }
 
     # Create GridSearchCV object
-    grid_search = GridSearchCV(pipeline, param_grid, cv=10, scoring='f1', n_jobs=-1)
+    grid_search = GridSearchCV(pipeline, param_grid, cv=10, scoring='roc_auc', n_jobs=-1)
 
-    grid_search.fit(X, Y['is_fraud'].squeeze())
+    grid_search.fit(X, Y)
+
+    print(grid_search)
     best_params = {k.replace('clf__', ''): v for k, v in grid_search.best_params_.items()}
 
     logger = logging.getLogger(__name__)
@@ -91,8 +97,9 @@ def select_hiperparameters(X, Y):
 
 
 def _train_final_model(X, Y, best_params) -> GradientBoostingClassifier:
+    print(best_params)
     final_model = GradientBoostingClassifier(**best_params)
-    final_model.fit(X, Y['is_fraud'].squeeze())
+    final_model.fit(X, Y)
     return final_model
 
 def _get_metrics(Y_true, Y_pred):
@@ -104,8 +111,9 @@ def _get_metrics(Y_true, Y_pred):
 
 def evaluate_model(X, Y, model):
     Y_pred = model.predict(X)
-
     metrics = _get_metrics(Y, Y_pred)
-
+    print(metrics)
     logger = logging.getLogger(__name__)
     logger.info("Final model score :", metrics)
+
+    return Y_pred
