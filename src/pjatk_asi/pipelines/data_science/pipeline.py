@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import select_hiperparameters, evaluate_model
+from .nodes_model import select_hiperparameters, evaluate_model
 from .nodes_data_preparation import (data_split, train_test_split, balance,
                                      one_hot_encode_fit, one_hot_encode_apply,
                                      normalize_columns_fit, normalize_columns_apply)
@@ -35,7 +35,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=balance,
-                inputs=["X_train_ohe", "Y_train"],
+                inputs=["X_train_prepared", "Y_train"],
                 outputs=["X_train_balanced", "Y_train_balanced"],
                 name="balance_node",
             ),
