@@ -155,3 +155,4 @@ venv.bak/
 data/01_raw/credit_data.csv
 stats.json
 session_store.db
+/wandb

@@ -4,8 +4,11 @@ from pathlib import Path
 import pandas as pd
 from sklearn.utils import shuffle
 
+import wandb
+
 
 def __download_data(path_to_dir : Path, file_name: str):
+    wandb.init(project="PJATK_ASI")
     is_existing = os.path.exists(path_to_dir + file_name)
 
     if not is_existing:

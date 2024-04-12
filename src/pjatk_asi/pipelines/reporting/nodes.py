@@ -6,6 +6,8 @@ import plotly.graph_objs as go
 import seaborn as sn
 from sklearn.metrics import confusion_matrix
 
+import wandb
+
 
 # This function uses plotly.express
 # def compare_passenger_capacity_exp(preprocessed_shuttles: pd.DataFrame):
