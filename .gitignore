@@ -152,3 +152,5 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+data/01_raw/credit_data.csv
+stats.json
