@@ -24,7 +24,15 @@ def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame) -> GradientBoosting
     grid_search = GridSearchCV(pipeline, param_grid, cv=10, scoring='roc_auc', n_jobs=-1)
     grid_search.fit(X, Y)
     best_params = {k.replace('clf__', ''): v for k, v in grid_search.best_params_.items()}
-    wandb.log(best_params)
+    means = grid_search.cv_results_['mean_test_score']
+    stds = grid_search.cv_results_['std_test_score']
+    params = grid_search.cv_results_['params']
+    for mean, stdev, param in zip(means, stds, params):
+        wandb.log({
+            'Mean': mean,
+            'Stdev': stdev,
+            'Params':param
+        })
     logger = logging.getLogger(__name__)
     logger.info("Model has best parameters: %s", str(best_params))
 
