@@ -9,7 +9,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=get_data,
-                inputs=None,
+                inputs='wandb_started',
                 outputs="credit_data",
                 name="get_data_node",
             ),

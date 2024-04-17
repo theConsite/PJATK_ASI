@@ -19,7 +19,7 @@ def __download_data(path_to_dir : Path, file_name: str):
         os.rmdir(path_to_dir + "credit-card-fraud-prediction")
 
 
-def get_data():
+def get_data(did_wandb_start: bool):
     folder = 'data/01_raw/'
     __download_data(folder, 'credit_data.csv')
     fraud_df = shuffle(pd.read_csv(folder + 'credit_data.csv'))
