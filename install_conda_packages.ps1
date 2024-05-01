@@ -38,7 +38,19 @@ conda install -n $new_py_env --yes -c conda-forge  --update-all `
     scikit-learn `
     opendatasets
 
+
+conda install -n $new_py_env --yes -c conda-forge `
+    kedro `
+    kedro-viz
+
+conda install -n $new_py_env --yes -c conda-forge `
+    wandb
+
+
+
 python -c "import sklearn; sklearn.show_versions()"
+kedro info
 
 
 # conda remove --name $new_py_env --all --yes
+# pycaret
