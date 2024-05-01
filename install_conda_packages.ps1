@@ -1,3 +1,9 @@
+
+# ! NOT RECOMMENDED
+
+
+
+
 # powershell script to create conda environment and install necessary packages
 # run this in conda enabled terminal
 $new_py_env = 'asi'
