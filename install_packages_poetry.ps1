@@ -21,6 +21,8 @@ poetry --version
 
 # 3. create venv virtual envoronment
 python -m venv .venv
+#or the non default version
+& "$Env:LOCALAPPDATA\Programs\Python\Python311\python.exe" -m venv .venv
 
 # 4. activate venv
 # requried step if using a conda envir instead of system python, 
@@ -32,8 +34,8 @@ python -m venv .venv
 poetry install
 
 # 6. to use env in terminal, activate using venv or poetry
-./.venv/Scripts/Activate.ps1        # .venv activator
-poetry shell                        # poetry activator, spawns a sub-shell
+./.venv/Scripts/Activate.ps1    # .venv activator, USE THIS
+poetry shell                    # poetry activator, spawns a sub-shell; useless in vscode as will not allow to push lines to REPL
 
 # 7. to use env in vscode: > select python interpreter > '.venv':Poetry
 
