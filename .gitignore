@@ -1,6 +1,6 @@
 notebooks/data/
 dataset.csv
-
+data/01_raw/dataset.csv
 ##########################
 # KEDRO PROJECT
 
