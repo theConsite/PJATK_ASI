@@ -43,6 +43,10 @@ credit_data:
   type: pandas.CSVDataset
   filepath: data/01_raw/credit_data.csv
 
+score_data:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/credit_data.csv
+
 credit_data_with_removed_columns:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/credit_data_with_removed_columns.pq
@@ -62,12 +66,12 @@ X_test_prepared:
 one_hot_encoder:
   type: pickle.PickleDataset
   filepath: data/06_models/one_hot_encoder.pickle
-  versioned: false
+  versioned: true
 
 std_scaler:
   type: pickle.PickleDataset
   filepath: data/06_models/std_scaler.pickle
-  versioned: false
+  versioned: true
 
 #best_parameters:
 #  type: pandas.JSONDataSet
@@ -78,6 +82,10 @@ model:
   filepath: data/06_models/model.pickle
   versioned: true
 
+score_result:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/score_result.csv
+
 #Y_predicted:
 #  type: pandas.CSVDataSet
 #  filepath: data/07_model_output/Y_predicted.pq
@@ -86,6 +94,11 @@ model:
 confusion_matrix:
   type: matplotlib.MatplotlibWriter
   filepath: data/08_reporting/confusion_matrix.png
+  versioned: true
+
+metrics:
+  type: pandas.JSONDataset
+  filepath: data/08_reporting/metrics.json
   versioned: true
 
 #

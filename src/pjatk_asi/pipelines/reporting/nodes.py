@@ -1,53 +1,33 @@
+import json
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px  # noqa:  F401
 import plotly.graph_objs as go
 import seaborn as sn
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+
 
 import wandb
+def create_metrics(Y_pred, Y_true):
+    # Calculate various metrics
+    accuracy = accuracy_score(Y_true, Y_pred)
+    precision = precision_score(Y_true, Y_pred, average='weighted')
+    recall = recall_score(Y_true, Y_pred, average='weighted')
+    f1 = f1_score(Y_true, Y_pred, average='weighted')
+    #auc = roc_auc_score(Y_true, model.predict_proba(Y_true)[:, 1])
 
+    # Create a dictionary to hold the metrics
+    metrics = {
+        'accuracy': [accuracy],
+        'precision': [precision],
+        'recall': [recall],
+        'f1_score': [f1],
+    }
 
-# This function uses plotly.express
-# def compare_passenger_capacity_exp(preprocessed_shuttles: pd.DataFrame):
-#     return (
-#         preprocessed_shuttles.groupby(["shuttle_type"])
-#         .mean(numeric_only=True)
-#         .reset_index()
-#     )
-#
-#
-# # This function uses plotly.graph_objects
-# def compare_passenger_capacity_go(preprocessed_shuttles: pd.DataFrame):
-#
-#     data_frame = (
-#         preprocessed_shuttles.groupby(["shuttle_type"])
-#         .mean(numeric_only=True)
-#         .reset_index()
-#     )
-#     fig = go.Figure(
-#         [
-#             go.Bar(
-#                 x=data_frame["shuttle_type"],
-#                 y=data_frame["passenger_capacity"],
-#             )
-#         ]
-#     )
-#
-#     return fig
-#
-#
-# def create_confusion_matrix(companies: pd.DataFrame):
-#     actuals = [0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1]
-#     predicted = [1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1]
-#     data = {"y_Actual": actuals, "y_Predicted": predicted}
-#     df = pd.DataFrame(data, columns=["y_Actual", "y_Predicted"])
-#     confusion_matrix = pd.crosstab(
-#         df["y_Actual"], df["y_Predicted"], rownames=["Actual"], colnames=["Predicted"]
-#     )
-#     sn.heatmap(confusion_matrix, annot=True)
-#     return plt
+    return pd.DataFrame(metrics)
+
 
 def create_confusion_matrix(Y_pred, Y_true):
     # Normalize the confusion matrix
