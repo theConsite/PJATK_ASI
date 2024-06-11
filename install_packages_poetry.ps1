@@ -16,7 +16,7 @@
 #   - create .venv (step 3. venv will use conda env python interpreter)
 
 # 2. install poetry
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -3.11
 poetry --version
 
 # 3. create venv virtual envoronment
