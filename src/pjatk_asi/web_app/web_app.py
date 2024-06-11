@@ -66,12 +66,14 @@ if uploaded_file is not None:
     st.write("Uploaded Data:")
     st.write(data)
 
+    score_data_path = "score_data.csv"
+    data.to_csv(score_data_path)
+
     if st.button('Predict'):
-        score_data_path = "score_data.csv"
         run_kedro_pipeline(selected_subfolder, score_data_path)
 
         data = pd.read_csv(score_data_path)
-        score_result = pd.read_csv("data/07_model_output/score_result.csv")
+        score_result = pd.read_csv("../../../data/07_model_output/score_result.csv")
 
         data['is_fraud'] = score_result['is_fraud']
 
