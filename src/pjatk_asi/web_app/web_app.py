@@ -15,22 +15,29 @@ from kedro.config import OmegaConfigLoader
 from kedro.framework.project import find_pipelines
 
 def run_kedro_pipeline(model, data):
+    original_cwd = os.getcwd()
     # Define the command to run the Kedro pipeline
-    command = [
-        "python",
-        "-W", "default:Kedro is not yet fully compatible",
-        "-m", "kedro",
-        "run ../../../",
-        "--pipeline=sp",
-        f"--params=model_folder={model},raw_data_path={data}"
-    ]
+    try:
+        # Change the current working directory to ../../../
+        os.chdir('../../../')
+        command = [
+            "python",
+            "-W", "default:Kedro is not yet fully compatible",
+            "-m", "kedro",
+            "run ../../../",
+            "--pipeline=sp",
+            f"--params=model_folder={model},raw_data_path={data}"
+        ]
 
-    # Execute the command
-    result = subprocess.run(command, capture_output=True, text=True)
+        # Execute the command
+        result = subprocess.run(command, capture_output=True, text=True)
 
-    # Print the output and error (if any)
-    print("Output:\n", result.stdout)
-    print("Error:\n", result.stderr)
+        # Print the output and error (if any)
+        print("Output:\n", result.stdout)
+        print("Error:\n", result.stderr)
+    finally:
+        # Change back to the original working directory
+        os.chdir(original_cwd)
 
 
 
