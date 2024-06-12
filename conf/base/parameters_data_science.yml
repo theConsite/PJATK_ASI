@@ -1,12 +1,6 @@
+model_type: GradientBoostingClassifier
+hyperparameters: data/05_model_input/hyperparameters.json
+
 model_options:
-  test_size: 0.2
-  random_state: 3
-  features:
-    - engines
-    - passenger_capacity
-    - crew
-    - d_check_complete
-    - moon_clearance_complete
-    - iata_approved
-    - company_rating
-    - review_scores_rating
+  model_type: GradientBoostingClassifier
+  hyperparameters: data/05_model_input/hyperparameters.json

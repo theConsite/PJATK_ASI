@@ -89,7 +89,6 @@ if uploaded_file is not None:
         st.title("Score Data with Predictions")
         st.dataframe(styled_data)
 
-
         prediction_counts = pd.Series(score_result['is_fraud']).value_counts()
         st.write("Prediction Counts:")
         st.write(prediction_counts)

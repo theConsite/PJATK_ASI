@@ -53,7 +53,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=select_hiperparameters,
-                inputs=["X_train_balanced", "Y_train_balanced"],
+                inputs=["X_train_balanced", "Y_train_balanced", "params:model_type", "params:hyperparameters"],
                 outputs="model",
                 name="select_hiperparameters_node",
             ),

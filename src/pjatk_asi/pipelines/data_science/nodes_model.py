@@ -1,8 +1,11 @@
+import json
 import logging
 from typing import Dict, Tuple
 
 import pandas as pd
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import f1_score, roc_auc_score, balanced_accuracy_score, recall_score
@@ -10,16 +13,46 @@ from sklearn.metrics import f1_score, roc_auc_score, balanced_accuracy_score, re
 import wandb
 
 
-def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame) -> GradientBoostingClassifier:
+def _transform_params(json_params):
+    # Add 'clf__' prefix to each key in the dictionary
+    param_grid = {f'clf__{key}': value for key, value in json_params.items()}
+    return param_grid
+
+
+def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame, model_class: str, hyperparameters_path)\
+        -> GradientBoostingClassifier:
+
+    print(hyperparameters_path)
+    print(model_class)
+
+    if model_class == "GradientBoostingClassifier":
+        model_type = GradientBoostingClassifier
+    elif model_class == "RandomForestClassifier":
+        model_type = RandomForestClassifier
+    elif model_class == "LogisticRegression":
+        model_type = LogisticRegression
+    elif model_class == "KNeighborsClassifier":
+        model_type = KNeighborsClassifier
+    else:
+        raise ValueError(f"Unsupported model class: {model_class}")
+
     pipeline = Pipeline([
-        ('clf', GradientBoostingClassifier())
+        ('clf', model_type())
     ])
-    # Define parameter grid for GridSearchCV
-    param_grid = {
-        'clf__n_estimators': [50, 100, 150, 200],
-        'clf__learning_rate': [0.01, 0.1, 0.2],
-        'clf__max_depth': [3, 4, 5, 6]
-    }
+
+    # Read JSON from file
+    with open(hyperparameters_path, 'r') as file:
+        json_params = json.load(file)
+
+    # Transform the parameters
+    param_grid = _transform_params(json_params)
+
+    # # Define parameter grid for GridSearchCV
+    # param_grid = {
+    #     'clf__n_estimators': [50, 100, 150, 200],
+    #     'clf__learning_rate': [0.01, 0.1, 0.2],
+    #     'clf__max_depth': [3, 4, 5, 6]
+    # }
     # Create GridSearchCV object
     grid_search = GridSearchCV(pipeline, param_grid, cv=10, scoring='roc_auc', n_jobs=-1)
     grid_search.fit(X, Y)
@@ -36,11 +69,11 @@ def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame) -> GradientBoosting
     logger = logging.getLogger(__name__)
     logger.info("Model has best parameters: %s", str(best_params))
 
-    return _train_final_model(X, Y, best_params)
+    return _train_final_model(X, Y, model_type, best_params)
 
 
-def _train_final_model(X: pd.DataFrame, Y: pd.DataFrame, best_params: Dict[str, str]) -> GradientBoostingClassifier:
-    final_model = GradientBoostingClassifier(**best_params)
+def _train_final_model(X: pd.DataFrame, Y: pd.DataFrame, model, best_params: Dict[str, str]) -> GradientBoostingClassifier:
+    final_model = model(**best_params)
     final_model.fit(X, Y)
     return final_model
 
