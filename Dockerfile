@@ -18,14 +18,14 @@ RUN export PATH="/root/.local/bin:$PATH"
 # Make sure your private key is named id_rsa (or provide correct filename)
 COPY docker.key /root/.ssh/id_rsa
 
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+#RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
-RUN useradd -m -s /bin/bash bilbo
-RUN echo "bilbo:hobbit" | chpasswd
+#RUN useradd -m -s /bin/bash bilbo
+#RUN echo "bilbo:hobbit" | chpasswd
 
-EXPOSE 22
+#EXPOSE 22
 
-ENTRYPOINT service ssh start && bash
+#ENTRYPOINT service ssh start && bash
 
 
 # Adjust SSH key permissions
