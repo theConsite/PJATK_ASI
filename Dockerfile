@@ -36,5 +36,5 @@ RUN /root/.local/bin/poetry install
 EXPOSE 8501
 
 # Command to run the app
-CMD ["streamlit", "run", "web_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD /bin/bash -c "cd src/pjatk_asi/web_app/ &&  /root/.local/bin/poetry run streamlit run web_app.py --server.port=8502 --server.address=0.0.0.0"
 
