@@ -32,9 +32,12 @@ RUN /root/.local/bin/poetry install
 # Copy the rest of the application code to the working directory
 #COPY . .
 
-# Expose the port the app runs on
-EXPOSE 8501
+# Expose ports for both applications
+EXPOSE 8502
+EXPOSE 8503
 
-# Command to run the app
-CMD /bin/bash -c "cd src/pjatk_asi/web_app/ &&  /root/.local/bin/poetry run streamlit run web_app.py --server.port=8502 --server.address=0.0.0.0"
-
+# Command to run both applications concurrently
+CMD /bin/bash -c "\
+    (cd src/pjatk_asi/web_app/ && /root/.local/bin/poetry run streamlit run web_app.py --server.port=8502 --server.address=0.0.0.0 &) \
+    && (cd src/pjatk_asi/web_app/ && /root/.local/bin/poetry run streamlit run new_model_app.py --server.port=8503 --server.address=0.0.0.0 &) \
+    && sleep infinity"
