@@ -155,5 +155,11 @@ if st.button('Train'):
         # Create a bar plot
         fig = px.bar(metrics_df, x='Metric', y='Value', title='Model Metrics', labels={'Value': 'Score'})
         st.plotly_chart(fig)
+
+        selected_hyperparameters_folder = '../../../data/08_reporting/selected_hyperparamters.json'
+        selected_hyperparametrs = os.path.join(selected_hyperparameters_folder, newest_folder, "selected_hyperparamters.json")
+        with open(selected_hyperparametrs, 'r') as file:
+            flattened_hyperparameters = {k: list(v.values())[0] for k, v in json.load(file).items()}
+            st.json(flattened_hyperparameters)
     else:
         st.error('Metrics file not found.')

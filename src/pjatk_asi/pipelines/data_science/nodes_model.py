@@ -9,6 +9,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import f1_score, roc_auc_score, balanced_accuracy_score, recall_score
+from kedro_datasets.pandas import JSONDataset
 
 import wandb
 
@@ -19,8 +20,7 @@ def _transform_params(json_params):
     return param_grid
 
 
-def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame, model_class: str, hyperparameters_path)\
-        -> GradientBoostingClassifier:
+def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame, model_class: str, hyperparameters_path):
 
     print(hyperparameters_path)
     print(model_class)
@@ -69,7 +69,10 @@ def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame, model_class: str, h
     logger = logging.getLogger(__name__)
     logger.info("Model has best parameters: %s", str(best_params))
 
-    return _train_final_model(X, Y, model_type, best_params)
+    model = _train_final_model(X, Y, model_type, best_params)
+    best_params['Model'] = model_class
+
+    return model, pd.DataFrame([best_params])
 
 
 def _train_final_model(X: pd.DataFrame, Y: pd.DataFrame, model, best_params: Dict[str, str]) -> GradientBoostingClassifier:

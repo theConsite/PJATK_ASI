@@ -57,11 +57,16 @@ selected_subfolder = st.sidebar.selectbox('Select model:', subfolders)
 selected_subfolder_path = models_dir / selected_subfolder
 
 metrics_dir = os.path.join("../../../data/08_reporting/metrics.json", selected_subfolder)
-st.sidebar.markdown("# Model Metrics")
+st.sidebar.markdown("# Model info")
 metrics_file = os.path.join(metrics_dir, "metrics.json")
 with open(metrics_file, 'r') as file:
     st.sidebar.json(flatten_metrics(json.load(file)))
 
+hyperparameters_dir = os.path.join("../../../data/08_reporting/selected_hyperparamters.json", selected_subfolder)
+hyperparameters_file = os.path.join(hyperparameters_dir, "selected_hyperparamters.json")
+print(hyperparameters_file)
+with open(hyperparameters_file, 'r') as file:
+    st.sidebar.json(flatten_metrics(json.load(file)))
 
 
 # Title of the app

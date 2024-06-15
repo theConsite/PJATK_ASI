@@ -86,6 +86,11 @@ score_result:
   type: pandas.CSVDataset
   filepath: data/07_model_output/score_result.csv
 
+selected_hyperparamters:
+  type: pandas.JSONDataset
+  filepath: data/08_reporting/selected_hyperparamters.json
+  versioned: true
+
 #Y_predicted:
 #  type: pandas.CSVDataSet
 #  filepath: data/07_model_output/Y_predicted.pq
