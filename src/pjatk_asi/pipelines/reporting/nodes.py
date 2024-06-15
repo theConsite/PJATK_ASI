@@ -1,4 +1,5 @@
 import json
+import pickle
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,6 +28,20 @@ def create_metrics(Y_pred, Y_true):
     }
 
     return pd.DataFrame(metrics)
+
+def save_model_to_WandB(model, metrics, params):
+    with open('model.pkl', 'wb') as f:
+        pickle.dump(model, f)
+
+    artifact = wandb.Artifact('new_model', type='model',
+                              description='New Model',
+                              metadata={"parameters": params, "metrics": metrics})
+
+    # Add the model file to the artifact
+    artifact.add_file('model.pkl')
+
+    # Save the artifact
+    wandb.run.log_artifact(artifact)
 
 
 def create_confusion_matrix(Y_pred, Y_true):
