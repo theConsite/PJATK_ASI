@@ -18,7 +18,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=save_model_to_WandB,
-                inputs=["model", "metrics", "selected_hyperparamters"],
+                inputs=["model", "metrics", "selected_hyperparamters", "one_hot_encoder", "std_scaler"],
                 outputs=None,
             ),
         ]

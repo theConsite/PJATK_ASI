@@ -29,9 +29,15 @@ def create_metrics(Y_pred, Y_true):
 
     return pd.DataFrame(metrics)
 
-def save_model_to_WandB(model, metrics, params):
+def save_model_to_WandB(model, metrics, params, ohe, std):
     with open('model.pkl', 'wb') as f:
         pickle.dump(model, f)
+
+    with open('ohe.pkl', 'wb') as f:
+        pickle.dump(ohe, f)
+
+    with open('std.pkl', 'wb') as f:
+        pickle.dump(std, f)
 
     artifact = wandb.Artifact('new_model', type='model',
                               description='New Model',
@@ -39,6 +45,8 @@ def save_model_to_WandB(model, metrics, params):
 
     # Add the model file to the artifact
     artifact.add_file('model.pkl')
+    artifact.add_file('ohe.pkl')
+    artifact.add_file('std.pkl')
 
     # Save the artifact
     wandb.run.log_artifact(artifact)
