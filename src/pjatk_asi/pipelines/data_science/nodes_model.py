@@ -72,6 +72,9 @@ def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame, model_class: str, h
     model = _train_final_model(X, Y, model_type, best_params)
     best_params['Model'] = model_class
 
+    # Log the model to WandB
+    wandb.log({'model': model})
+
     return model, pd.DataFrame([best_params])
 
 
