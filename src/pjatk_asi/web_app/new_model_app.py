@@ -6,6 +6,7 @@ import subprocess
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import db_wrapper as db
 
 def run_kedro_pipeline(model_class, hyperparameters_path):
     # Save the current working directory
@@ -43,6 +44,17 @@ def get_newest_subfolder(folder_path):
 # Streamlit page layout
 st.title("Model Training")
 
+st.header("Append data")
+uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+if uploaded_file is not None:
+    data = pd.read_csv(uploaded_file)
+    st.write("Uploaded Data:")
+    st.write(data)
+    if st.button("Append to Database"):
+        insert_result = db.insert_data_into_sqlite(data)
+        st.toast(insert_result[0], icon=':material/database:')
+
+st.header("Model settings")
 # Dropdown menu for classifier selection
 classifier_option = st.selectbox(
     'Select Classifier',
