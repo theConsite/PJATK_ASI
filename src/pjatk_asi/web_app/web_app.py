@@ -17,7 +17,7 @@ def run_kedro_pipeline(model, data):
             "python",
             "-W", "default:Kedro is not yet fully compatible",
             "-m", "kedro",
-            "run ../../../",
+            "run",
             "--pipeline=sp",
             f"--params=model_folder={model},raw_data_path={data}"
         ]
