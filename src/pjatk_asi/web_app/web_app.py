@@ -10,6 +10,8 @@ import streamlit as st
 import pandas as pd
 import wandb
 
+from io import StringIO
+
 from kedro.runner import SequentialRunner
 from kedro.framework.context import KedroContext
 from kedro.framework.hooks.manager import _create_hook_manager
