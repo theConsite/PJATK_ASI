@@ -1,3 +1,3 @@
 # conf/base/parameters_scoring.yml
-model_folder: data/06_models
+model_folder: latest
 raw_data_path: data/01_raw/test_data.csv
