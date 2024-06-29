@@ -35,6 +35,7 @@ RUN chmod 600 /root/.ssh/id_rsa \
 
 # Clone your Git repository
 RUN git clone https://github.com/theConsite/PJATK_ASI.git .
+RUN git checkout jenkins
 
 # Copy the requirements file to the working directory
 RUN /root/.local/bin/poetry install

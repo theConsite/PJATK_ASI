@@ -51,12 +51,42 @@ def one_hot_encode_fit(X: pd.DataFrame) -> (pd.DataFrame, ColumnTransformer):
     return X, cat_transformer_X
 
 
+# def normalize_columns_apply(X: pd.DataFrame, scaler: StandardScaler) -> pd.DataFrame:
+#     quant_columns = X.select_dtypes(include=["number"]).columns.values.tolist()
+#     X[quant_columns] = scaler.transform(X[quant_columns])
+#
+#     return X
+
+
 def normalize_columns_apply(X: pd.DataFrame, scaler: StandardScaler) -> pd.DataFrame:
-    quant_columns = X.select_dtypes(include=["number"]).columns.values.tolist()
-    X[quant_columns] = scaler.transform(X[quant_columns])
+    """
+    Normalize only the columns that were seen by the scaler and remove columns
+    that were not part of the scaler's input.
+
+    Parameters:
+    X (pd.DataFrame): The DataFrame with the features to be normalized.
+    scaler (StandardScaler): The fitted StandardScaler object.
+
+    Returns:
+    pd.DataFrame: The DataFrame with the normalized columns and only the columns
+                  that were part of the scaler's input.
+    """
+    # Get the columns that were seen by the scaler (the scaler's feature names)
+    seen_columns = scaler.feature_names_in_
+
+    # Find common columns between the DataFrame and the scaler's feature names
+    common_columns = [col for col in seen_columns if col in X.columns]
+
+    if not common_columns:
+        raise ValueError("No common columns between the DataFrame and the scaler.")
+
+    # Normalize the columns that were seen by the scaler
+    X[common_columns] = scaler.transform(X[common_columns])
+
+    # Keep only the columns that were seen by the scaler
+    X = X[common_columns]
 
     return X
-
 
 def normalize_columns_fit(X: pd.DataFrame) -> (pd.DataFrame, StandardScaler):
     quant_columns = X.select_dtypes(include=["number"]).columns.values.tolist()
