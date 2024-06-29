@@ -73,18 +73,6 @@ def select_hiperparameters(X: pd.DataFrame, Y: pd.DataFrame, model_class: str, h
     model = _train_final_model(X, Y, model_type, best_params)
     best_params['Model'] = model_class
 
-    # Save the trained model
-    joblib.dump(model, 'model.pkl')
-
-    # Create a W&B artifact
-    artifact = wandb.Artifact('model', type='model')
-
-    # Add the model file to the artifact
-    artifact.add_file('model.pkl')
-
-    # Log the artifact
-    wandb.log_artifact(artifact)
-
     return model, pd.DataFrame([best_params])
 
 
