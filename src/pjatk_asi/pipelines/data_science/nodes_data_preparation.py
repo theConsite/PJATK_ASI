@@ -75,7 +75,8 @@ def normalize_columns_apply(X: pd.DataFrame, scaler: StandardScaler) -> pd.DataF
     seen_columns = scaler.feature_names_in_
 
     # Find common columns between the DataFrame and the scaler's feature names
-    common_columns = [col for col in seen_columns if col in X.columns]
+    quant_columns = X.select_dtypes(include=["number"]).columns.values.tolist()
+    common_columns = [col for col in seen_columns if col in X.columns and col in quant_columns]
 
     if not common_columns:
         raise ValueError("No common columns between the DataFrame and the scaler.")
