@@ -1,13 +1,12 @@
 import json
 import os.path
-import pickle
 import subprocess
-from io import StringIO
 from pathlib import Path
 
 import joblib
 import streamlit as st
 import pandas as pd
+
 import wandb
 
 from kedro.runner import SequentialRunner
@@ -15,6 +14,9 @@ from kedro.framework.context import KedroContext
 from kedro.framework.hooks.manager import _create_hook_manager
 from kedro.config import OmegaConfigLoader
 from kedro.framework.project import find_pipelines
+
+import db_wrapper as db
+
 
 
 def run_kedro_pipeline(model, data):
@@ -168,3 +170,6 @@ if uploaded_file is not None:
             file_name='predictions.csv',
             mime='text/csv',
         )
+        if st.button("Save results to DB"):
+            instert_command = db.insert_data_into_sqlite(data)
+            st.toast(instert_command[0], icon=':material/database:')

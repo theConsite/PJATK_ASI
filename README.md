@@ -1,6 +1,6 @@
 # Projekt ASI
 Projekt wykonywany w ramach przedmiotu ASI na Polsko-Japońskiej Akademii Technik Komputerowych
-(Semestr letni 2024, grupa ćwiczeniowa 11)
+(Semestr letni 2024, grupa ćwiczeniowa 11, grupa projektowa 4)
 
 
 ## Autorzy
@@ -13,9 +13,17 @@ Grupa 4
 - [@Jarosław Małucha](https://github.com/JaroslawMalucha)
 
 ## Uruchomienie
-W repozytorium nie ma zbioru danych, musicie je pobrać oddzielnie z [tego linku](https://www.kaggle.com/datasets/kelvinkelue/credit-card-fraud-prediction?resource=download) i ustawić nazwę pliku na 'dataset.csv'
+W repozytorium nie ma zbioru danych, należy je pobrać oddzielnie z [tego linku](https://www.kaggle.com/datasets/kelvinkelue/credit-card-fraud-prediction?resource=download) oraz dodać dane do bazy. Można to zrobić z pomocą jednej z aplikacjie streamlit
 
 
 
-## Opis
-Lorem ipsum i tak dalej
+## Użyte technologie
+- Python
+
+- Docker
+
+- Streamlit
+- PyCaret
+- Kedro
+- WandB
+- SQLite
