@@ -1,7 +1,7 @@
 # pipelines/scoring/pipeline.py
 from kedro.pipeline import Pipeline, node
 from kedro.pipeline.modular_pipeline import pipeline
-from .nodes import predict, load_data, load_encoders
+from .nodes import predict, load_data, load_artifacts
 from ..data_processing.nodes_feature_engineering import feature_generation, remove_columns
 from ..data_science.nodes_data_preparation import one_hot_encode_apply, normalize_columns_apply
 
@@ -29,9 +29,9 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="remove_columns_node",
             ),
             node(
-                func=load_encoders,
+                func=load_artifacts,
                 inputs="params:model_folder",
-                outputs=["one_hot_encoder_loaded", "std_scaler_loaded"],
+                outputs=["one_hot_encoder_loaded", "std_scaler_loaded", "model"],
                 name="load_encoders",
             ),
             node(
@@ -48,7 +48,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=predict,
-                inputs=["score_ohe_prepared", "params:model_folder"],
+                inputs=["model", "score_ohe_prepared", "params:model_folder"],
                 outputs="score_result",
                 name="make_predictions",
             )
