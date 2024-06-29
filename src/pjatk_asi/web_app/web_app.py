@@ -17,6 +17,8 @@ from kedro.framework.project import find_pipelines
 
 import db_wrapper as db
 
+from io import StringIO
+
 
 
 def run_kedro_pipeline(model, data):
