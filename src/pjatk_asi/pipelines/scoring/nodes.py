@@ -10,7 +10,9 @@ import wandb
 
 def load_data(raw_data_path: str) -> pd.DataFrame:
     print("load_data")
-    return pd.read_csv(raw_data_path)
+    df = pd.read_csv(raw_data_path)
+    df = df.drop('Unnamed: 0.1', axis=1)
+    return df
 
 
 def predict(model, preprocessed_data: pd.DataFrame, model_folder: str) -> pd.DataFrame:
